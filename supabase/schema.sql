@@ -14,7 +14,8 @@ create table if not exists public.profiles (
   orcid_url text,
   scholar_url text,
   bio text,
-  membership_status text not null default 'pending'
+  cv_path text,
+  membership_status text not null default 'approved'
     check (membership_status in ('pending','approved','rejected')),
   account_role text not null default 'member'
     check (account_role in ('member','admin')),
@@ -109,6 +110,10 @@ create trigger protect_profile_permissions_trigger
 before update on public.profiles
 for each row execute function public.protect_profile_permissions();
 
+alter table public.profiles add column if not exists cv_path text;
+alter table public.profiles alter column membership_status set default 'approved';
+update public.profiles set membership_status = 'approved' where membership_status in ('pending','rejected');
+
 create table if not exists public.community_items (
   id uuid primary key default gen_random_uuid(),
   category text not null
@@ -180,15 +185,51 @@ grant usage on schema public to authenticated;
 revoke all on public.profiles from authenticated;
 grant select (
   id, full_name, researcher_type, specialty, affiliation, academic_title,
-  orcid_url, scholar_url, bio, membership_status, account_role, created_at, updated_at
+  orcid_url, scholar_url, bio, cv_path, membership_status, account_role, created_at, updated_at
 ) on public.profiles to authenticated;
 grant update (
   full_name, researcher_type, specialty, affiliation, academic_title,
-  orcid_url, scholar_url, bio, membership_status
+  orcid_url, scholar_url, bio, cv_path, membership_status
 ) on public.profiles to authenticated;
 grant select, insert, update, delete on public.community_items to authenticated;
 
--- بعد إنشاء أول حساب لك والتحقق من بريده، اجعليه حساب المسؤول من SQL Editor:
+-- مساحة خاصة للسير الذاتية (PDF)، لا يمكن تنزيلها للعامة.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('academic-cvs', 'academic-cvs', false, 10485760, array['application/pdf'])
+on conflict (id) do update
+set public = false, file_size_limit = 10485760, allowed_mime_types = array['application/pdf'];
+
+drop policy if exists "Academic CV upload own" on storage.objects;
+create policy "Academic CV upload own"
+on storage.objects for insert to authenticated
+with check (
+  bucket_id = 'academic-cvs'
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
+
+drop policy if exists "Academic CV read own or admin" on storage.objects;
+create policy "Academic CV read own or admin"
+on storage.objects for select to authenticated
+using (
+  bucket_id = 'academic-cvs'
+  and (
+    (storage.foldername(name))[1] = auth.uid()::text
+    or public.is_community_admin()
+  )
+);
+
+drop policy if exists "Academic CV delete own or admin" on storage.objects;
+create policy "Academic CV delete own or admin"
+on storage.objects for delete to authenticated
+using (
+  bucket_id = 'academic-cvs'
+  and (
+    (storage.foldername(name))[1] = auth.uid()::text
+    or public.is_community_admin()
+  )
+);
+
+-- بعد إنشاء أول حساب، يمكن ترقية حسابك إلى مسؤول اختياريًا من SQL Editor:
 -- update public.profiles
 -- set account_role = 'admin', membership_status = 'approved'
 -- where email = 'YOUR_EMAIL@example.com';
