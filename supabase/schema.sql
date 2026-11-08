@@ -176,7 +176,16 @@ on public.community_items for delete to authenticated
 using (owner_id = auth.uid() or public.is_community_admin());
 
 grant usage on schema public to authenticated;
-grant select, update on public.profiles to authenticated;
+-- إتاحة بيانات الملف الأكاديمي دون كشف البريد الإلكتروني للأعضاء.
+revoke all on public.profiles from authenticated;
+grant select (
+  id, full_name, researcher_type, specialty, affiliation, academic_title,
+  orcid_url, scholar_url, bio, membership_status, account_role, created_at, updated_at
+) on public.profiles to authenticated;
+grant update (
+  full_name, researcher_type, specialty, affiliation, academic_title,
+  orcid_url, scholar_url, bio, membership_status
+) on public.profiles to authenticated;
 grant select, insert, update, delete on public.community_items to authenticated;
 
 -- بعد إنشاء أول حساب لك والتحقق من بريده، اجعليه حساب المسؤول من SQL Editor:
