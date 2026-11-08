@@ -144,6 +144,7 @@ create policy "profile_read_self_or_approved"
 on public.profiles for select to authenticated
 using (
   id = auth.uid()
+  or public.is_community_admin()
   or (membership_status = 'approved' and public.is_approved_member())
 );
 
