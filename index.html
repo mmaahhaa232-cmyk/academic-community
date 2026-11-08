@@ -240,7 +240,7 @@ $("tab-login").addEventListener("click",()=>setAuthTab("login"));
 $("tab-signup").addEventListener("click",()=>setAuthTab("signup"));
 function showOnly(id){["auth-screen","pending-screen","profile-completion"].forEach(x=>$(x).hidden=x!==id);document.body.classList.remove("ready");}
 function showMember(){
- $("auth-screen").hidden=true;$("pending-screen").hidden=true;document.body.classList.add("ready");
+ $("auth-screen").hidden=true;$("pending-screen").hidden=true;$("profile-completion").hidden=true;document.body.classList.add("ready");
  $("member-bar").hidden=false;$("member-greeting").textContent="مرحبًا، "+(currentProfile.full_name||currentUser.email);
  $("admin-toggle").hidden=currentProfile.account_role!=="admin";
 }
