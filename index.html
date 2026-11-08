@@ -1,234 +1,208 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102a43">
 <title>مجتمعي الأكاديمي</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5f6f8;color:#263448}
-header{background:#142b46;color:white;padding:22px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.logo{font-size:23px;font-weight:bold;color:#e3c27c}
-header small{display:block;color:#d5dce5;margin-top:7px}
-nav{background:white;padding:12px 5%;display:flex;gap:9px;flex-wrap:wrap;box-shadow:0 2px 9px #0000000b}
-nav button{border:0;background:#f0f2f5;padding:11px 15px;border-radius:8px;cursor:pointer;color:#263448;font-weight:bold}
-nav button.active,nav button:hover{background:#173654;color:white}
-main{max-width:1100px;margin:28px auto;padding:0 16px}
-.hero{background:linear-gradient(120deg,#142b46,#315574);color:white;padding:38px 28px;border-radius:17px;margin-bottom:25px}
-.hero h1{font-size:30px;margin:0 0 14px}
-.hero p{line-height:2;color:#e1e8ef;max-width:650px}
-.hero button,.primary{background:#d6b66f;color:#142b46;border:0;padding:12px 20px;border-radius:8px;font-weight:bold;cursor:pointer}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px;margin:20px 0}
-.stat,.card{background:white;border-radius:12px;padding:19px;box-shadow:0 3px 14px #00000009}
-.stat strong{font-size:25px;color:#b18d4b;display:block;margin-bottom:8px}
-.section{display:none}
-.section.active{display:block}
-h2{color:#173654;margin:15px 0 20px}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-.card h3{color:#173654;margin-top:0}
-.card p{line-height:1.8;color:#667386}
-.tag{display:inline-block;background:#f4eddf;color:#80642e;padding:5px 10px;border-radius:20px;font-size:12px}
-input,textarea,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #dce1e8;border-radius:8px;font:inherit}
-textarea{min-height:90px}
-label{font-weight:bold;font-size:14px}
-form{background:white;padding:20px;border-radius:12px;margin:15px 0}
-.item{background:white;border-radius:10px;padding:17px;margin:12px 0;border-right:4px solid #d6b66f}
-.item h3{margin:0 0 8px;color:#173654}
-.search{max-width:500px}
-footer{text-align:center;padding:25px;background:#142b46;color:#dce3eb;margin-top:45px;line-height:2}
-.muted{color:#748094;font-size:13px}
+:root{--navy:#102a43;--blue:#1f4968;--gold:#c9a96e;--ink:#243447;--muted:#66788a;--bg:#f4f6f8;--line:#e4e9ef;--white:#fff;--red:#a94442}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Tahoma,Arial,sans-serif;line-height:1.7}
+header{background:linear-gradient(120deg,#102a43,#244e6b);color:white;padding:24px max(20px,calc((100% - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:46px;height:46px;border:1px solid #d6bd8c;border-radius:14px;display:grid;place-items:center;color:#e5cc99;font-size:25px}.brand h1{font-size:21px;margin:0;color:#f0d9a9}.brand p{margin:2px 0 0;color:#d4e0e9;font-size:12px}
+.header-note{font-size:13px;color:#e0e8ef}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:10px max(14px,calc((100% - 1120px)/2));display:flex;gap:7px;overflow-x:auto}
+nav button{white-space:nowrap;border:0;background:transparent;color:#506174;padding:10px 13px;border-radius:9px;font:inherit;font-size:13px;cursor:pointer}
+nav button.active,nav button:hover{background:#eaf0f5;color:var(--navy);font-weight:bold}
+main{max-width:1120px;margin:28px auto;padding:0 18px;min-height:65vh}
+.page{display:none}.page.active{display:block}
+.hero{background:linear-gradient(115deg,#163650,#315f7e);color:white;border-radius:18px;padding:34px;position:relative;overflow:hidden}
+.hero:after{content:"✦";position:absolute;left:35px;top:5px;font-size:130px;color:#ffffff0c}
+.hero h2{font-size:27px;margin:0 0 9px;color:#f1d8a5}.hero p{max-width:670px;color:#e1eaf0;margin:0 0 20px}
+.btn{border:0;border-radius:9px;padding:11px 17px;font:inherit;font-size:14px;cursor:pointer;transition:.15s}
+.btn-primary{background:var(--gold);color:#142d43;font-weight:bold}.btn-primary:hover{background:#dfc48e}
+.btn-light{background:white;color:var(--navy);font-weight:bold}.btn-outline{background:white;border:1px solid var(--line);color:var(--ink)}
+.btn-danger{background:#fff1f0;color:var(--red);padding:7px 11px;font-size:12px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:18px 0 30px}
+.stat,.panel,.entry{background:white;border:1px solid var(--line);border-radius:13px;padding:17px;box-shadow:0 4px 16px #102a4308}
+.stat b{display:block;font-size:25px;color:#a78343}.stat span{font-size:13px;color:var(--muted)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:25px 0 15px}
+.section-head h2{margin:0;color:var(--navy);font-size:21px}.sub{color:var(--muted);font-size:13px;margin:4px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.feature{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.feature .ico{font-size:23px}.feature h3{margin:8px 0 5px;color:var(--navy);font-size:16px}.feature p{margin:0;color:var(--muted);font-size:13px}
+.form{margin:16px 0;padding:20px;background:white;border:1px solid var(--line);border-radius:13px}
+.form h3{margin:0 0 15px;color:var(--navy);font-size:17px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.field.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:bold;margin:7px 0 4px}
+input,textarea,select{width:100%;border:1px solid #d8e0e8;border-radius:8px;padding:11px 12px;font:inherit;font-size:14px;background:white;color:var(--ink);outline:none}
+input:focus,textarea:focus,select:focus{border-color:#6488a3;box-shadow:0 0 0 3px #6488a31a}
+textarea{min-height:85px;resize:vertical}
+.form-actions{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.search{max-width:420px}
+.entries{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.entry h3{margin:0 0 5px;color:var(--navy);font-size:16px}.entry p{margin:5px 0;color:var(--muted);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.pill{display:inline-block;background:#f5efdf;color:#80632f;border-radius:30px;padding:3px 9px;font-size:11px;margin-bottom:8px}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5df;padding:25px;border-radius:12px;font-size:13px}
+.notice{background:#fff8e9;border:1px solid #ead9b5;color:#725a2e;border-radius:10px;padding:12px 14px;font-size:12px;margin:14px 0}
+footer{margin-top:45px;background:var(--navy);color:#d9e3eb;text-align:center;padding:25px 16px;font-size:12px}
+footer strong{color:#e6cc99;font-size:15px}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.entries{grid-template-columns:1fr}.hero{padding:25px 20px}.hero h2{font-size:22px}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.header-note{display:none}main{margin:18px auto}.brand h1{font-size:18px}}
 </style>
 </head>
 <body>
-
 <header>
- <div>
-  <div class="logo">✦ مجتمعي الأكاديمي</div>
-  <small>مساحة تجمع العقول وتصنع فرص التعاون العلمي</small>
- </div>
- <span>المجتمع الأكاديمي الرقمي</span>
+ <div class="brand"><div class="brand-mark">✦</div><div><h1>مجتمعي الأكاديمي</h1><p>مساحة تجمع العقول وتصنع فرص التعاون العلمي</p></div></div>
+ <div class="header-note">منصة للتواصل وتبادل المعرفة وبناء الشراكات البحثية</div>
 </header>
-
-<nav>
- <button class="active" onclick="show('home',this)">الرئيسية</button>
- <button onclick="show('researchers',this)">الباحثون</button>
- <button onclick="show('teams',this)">الفرق البحثية</button>
- <button onclick="show('library',this)">المكتبة العلمية</button>
- <button onclick="show('events',this)">الفعاليات</button>
- <button onclick="show('ideas',this)">الأفكار البحثية</button>
+<nav aria-label="التنقل الرئيسي">
+ <button class="active" data-page="home">الرئيسية</button>
+ <button data-page="researchers">الباحثون</button>
+ <button data-page="teams">الفرق البحثية</button>
+ <button data-page="library">المكتبة العلمية</button>
+ <button data-page="events">الفعاليات</button>
+ <button data-page="ideas">الأفكار البحثية</button>
 </nav>
-
 <main>
-<section id="home" class="section active">
- <div class="hero">
-  <h1>مرحبًا بك في مجتمعي الأكاديمي</h1>
-  <p>منصة رقمية تجمع أعضاء هيئة التدريس والباحثين في بيئة علمية تفاعلية، وتفتح آفاقًا جديدة للتواصل وتبادل المعرفة وبناء الشراكات البحثية.</p>
-  <button onclick="show('researchers',document.querySelectorAll('nav button')[1])">اكتشف الباحثين ←</button>
- </div>
+<section id="home" class="page active">
+ <div class="hero"><h2>مرحبًا بك في مجتمعي الأكاديمي</h2><p>بيئة رقمية تجمع أعضاء هيئة التدريس والباحثين، وتتيح التعرف على الخبرات والتخصصات، ومشاركة المصادر، وتكوين الفرق، وطرح المبادرات البحثية.</p><button class="btn btn-primary" data-go="researchers">استكشف الباحثين ←</button></div>
  <div class="stats">
-  <div class="stat"><strong id="researcherCount">0</strong>باحثون مسجلون</div>
-  <div class="stat"><strong id="teamCount">0</strong>فرق بحثية</div>
-  <div class="stat"><strong id="resourceCount">0</strong>مصادر علمية</div>
-  <div class="stat"><strong id="eventCount">0</strong>فعاليات</div>
+  <div class="stat"><b id="count-researchers">0</b><span>ملفات الباحثين</span></div>
+  <div class="stat"><b id="count-teams">0</b><span>الفرق البحثية</span></div>
+  <div class="stat"><b id="count-library">0</b><span>المصادر العلمية</span></div>
+  <div class="stat"><b id="count-events">0</b><span>الفعاليات</span></div>
  </div>
- <h2>خدمات المجتمع الأكاديمي</h2>
- <div class="cards">
-  <div class="card"><h3>👩‍🏫 دليل الباحثين</h3><p>التعرف على التخصصات والخبرات والاهتمامات البحثية.</p></div>
-  <div class="card"><h3>🤝 الفرق البحثية</h3><p>إنشاء فرق علمية والانضمام إلى مجموعات بحثية.</p></div>
-  <div class="card"><h3>📚 المكتبة العلمية</h3><p>مشاركة المصادر والمراجع والروابط العلمية.</p></div>
-  <div class="card"><h3>📅 الفعاليات</h3><p>متابعة المؤتمرات والندوات وورش العمل.</p></div>
-  <div class="card"><h3>💡 الأفكار البحثية</h3><p>طرح المبادرات والأفكار وتبادل المقترحات العلمية.</p></div>
-  <div class="card"><h3>🔍 الشراكات البحثية</h3><p>الوصول إلى باحثين لديهم اهتمامات علمية مشتركة.</p></div>
+ <div class="section-head"><div><h2>مساحات المجتمع الأكاديمي</h2><p class="sub">اختر المساحة التي ترغب في استكشافها أو المشاركة فيها.</p></div></div>
+ <div class="grid">
+  <article class="feature"><div class="ico">👩‍🏫</div><h3>دليل الباحثين</h3><p>التعرف على التخصصات والخبرات والاهتمامات البحثية.</p></article>
+  <article class="feature"><div class="ico">🤝</div><h3>الفرق البحثية</h3><p>تكوين فرق علمية وتبادل الخبرات والتعاون.</p></article>
+  <article class="feature"><div class="ico">📚</div><h3>المكتبة العلمية</h3><p>مشاركة الكتب والأبحاث والمصادر المفيدة.</p></article>
+  <article class="feature"><div class="ico">📅</div><h3>الفعاليات الأكاديمية</h3><p>التعريف بالمؤتمرات والندوات وورش العمل.</p></article>
+  <article class="feature"><div class="ico">💡</div><h3>الأفكار البحثية</h3><p>طرح المقترحات والمبادرات وفتح فرص التعاون.</p></article>
+  <article class="feature"><div class="ico">🌐</div><h3>الشراكات العلمية</h3><p>اكتشاف فرص التعاون بين التخصصات والباحثين.</p></article>
  </div>
+ <div class="notice">هذه نسخة أولية تجريبية. تُحفظ البيانات حاليًا في المتصفح المستخدم فقط؛ ولا تظهر تلقائيًا لبقية أعضاء هيئة التدريس. تفعيل الحسابات وقاعدة البيانات المشتركة يتطلب إعداد خدمة خلفية آمنة.</div>
 </section>
 
-<section id="researchers" class="section">
- <h2>دليل أعضاء هيئة التدريس والباحثين</h2>
- <p class="muted">تعرف على الخبرات والتخصصات الأكاديمية.</p>
- <input class="search" id="researchSearch" placeholder="ابحث بالاسم أو التخصص..." oninput="render()">
- <form onsubmit="addItem(event,'researchers')">
-  <h3>إضافة ملف باحث</h3>
-  <label>الاسم</label><input id="rname" required placeholder="الاسم الكامل">
-  <label>التخصص</label><input id="rspecialty" required placeholder="التخصص الأكاديمي">
-  <label>الجامعة أو الكلية</label><input id="runiversity" placeholder="اسم الجامعة أو الكلية">
-  <label>الاهتمامات البحثية</label><textarea id="rinterest" placeholder="اكتب الاهتمامات البحثية"></textarea>
-  <button class="primary">إضافة الباحث</button>
- </form>
- <div id="researchList"></div>
+<section id="researchers" class="page">
+ <div class="section-head"><div><h2>دليل أعضاء هيئة التدريس والباحثين</h2><p class="sub">أضف ملفًا تعريفيًا أو ابحث في الملفات المسجلة على هذا المتصفح.</p></div></div>
+ <input class="search" id="search-researchers" type="search" placeholder="ابحث بالاسم أو التخصص أو الجهة...">
+ <form class="form" id="form-researchers">
+  <h3>إضافة ملف باحث</h3><div class="fields">
+   <div class="field"><label for="r-name">الاسم الكامل *</label><input id="r-name" required maxlength="100"></div>
+   <div class="field"><label for="r-specialty">التخصص الأكاديمي *</label><input id="r-specialty" required maxlength="100"></div>
+   <div class="field"><label for="r-university">الجامعة أو الكلية</label><input id="r-university" maxlength="120"></div>
+   <div class="field"><label for="r-role">الرتبة أو المسمى الأكاديمي</label><input id="r-role" maxlength="100"></div>
+   <div class="field full"><label for="r-interest">الاهتمامات البحثية</label><textarea id="r-interest" maxlength="700"></textarea></div>
+   <div class="field full"><label for="r-contact">بريد التواصل (اختياري)</label><input id="r-contact" type="email" maxlength="150"></div>
+  </div><div class="form-actions"><button class="btn btn-primary" type="submit">حفظ الملف</button><span class="sub">الحقول المعلّمة بنجمة مطلوبة.</span></div>
+ </form><div id="list-researchers" class="entries"></div>
 </section>
 
-<section id="teams" class="section">
- <h2>الفرق البحثية</h2>
- <p class="muted">مساحة لتكوين فرق بحثية وتبادل الخبرات.</p>
- <form onsubmit="addItem(event,'teams')">
-  <h3>إنشاء فريق بحثي</h3>
-  <label>اسم الفريق</label><input id="tname" required>
-  <label>المجال البحثي</label><input id="tfield" required>
-  <label>وصف الفريق وأهدافه</label><textarea id="tdesc"></textarea>
-  <button class="primary">إنشاء الفريق</button>
- </form>
- <div id="teamList"></div>
+<section id="teams" class="page">
+ <div class="section-head"><div><h2>الفرق البحثية</h2><p class="sub">استعرض الفرق وأضف فريقًا جديدًا.</p></div></div>
+ <form class="form" id="form-teams"><h3>إنشاء فريق بحثي</h3><div class="fields">
+  <div class="field"><label for="t-name">اسم الفريق *</label><input id="t-name" required maxlength="120"></div>
+  <div class="field"><label for="t-field">المجال البحثي *</label><input id="t-field" required maxlength="120"></div>
+  <div class="field"><label for="t-leader">قائد الفريق</label><input id="t-leader" maxlength="100"></div>
+  <div class="field"><label for="t-members">عدد الأعضاء (اختياري)</label><input id="t-members" type="number" min="1" max="999"></div>
+  <div class="field full"><label for="t-desc">وصف الفريق وأهدافه</label><textarea id="t-desc" maxlength="900"></textarea></div>
+ </div><div class="form-actions"><button class="btn btn-primary" type="submit">إضافة الفريق</button></div></form>
+ <div id="list-teams" class="entries"></div>
 </section>
 
-<section id="library" class="section">
- <h2>المكتبة العلمية</h2>
- <p class="muted">شارك المصادر والمراجع العلمية ليستفيد منها المجتمع الأكاديمي.</p>
- <form onsubmit="addItem(event,'library')">
-  <h3>إضافة مصدر علمي</h3>
-  <label>عنوان المصدر</label><input id="lname" required>
-  <label>نوع المصدر</label>
-  <select id="ltype"><option>بحث علمي</option><option>كتاب</option><option>مرجع</option><option>رابط علمي</option></select>
-  <label>رابط المصدر (اختياري)</label><input id="llink" placeholder="https://">
-  <button class="primary">إضافة المصدر</button>
- </form>
- <div id="libraryList"></div>
+<section id="library" class="page">
+ <div class="section-head"><div><h2>المكتبة العلمية</h2><p class="sub">شارك المصادر والمراجع العلمية مع المجتمع الأكاديمي.</p></div></div>
+ <form class="form" id="form-library"><h3>إضافة مصدر علمي</h3><div class="fields">
+  <div class="field"><label for="l-name">عنوان المصدر *</label><input id="l-name" required maxlength="180"></div>
+  <div class="field"><label for="l-type">نوع المصدر</label><select id="l-type"><option>بحث علمي</option><option>كتاب</option><option>رسالة علمية</option><option>تقرير</option><option>موقع أو قاعدة بيانات</option><option>أخرى</option></select></div>
+  <div class="field full"><label for="l-link">رابط المصدر</label><input id="l-link" type="url" placeholder="https://"></div>
+  <div class="field full"><label for="l-note">ملاحظات أو وصف</label><textarea id="l-note" maxlength="600"></textarea></div>
+ </div><div class="form-actions"><button class="btn btn-primary" type="submit">إضافة المصدر</button></div></form>
+ <div id="list-library" class="entries"></div>
 </section>
 
-<section id="events" class="section">
- <h2>الفعاليات الأكاديمية</h2>
- <p class="muted">تعرف على الأنشطة واللقاءات العلمية القادمة.</p>
- <form onsubmit="addItem(event,'events')">
-  <h3>إضافة فعالية</h3>
-  <label>اسم الفعالية</label><input id="ename" required>
-  <label>نوع الفعالية</label>
-  <select id="etype"><option>مؤتمر</option><option>ندوة</option><option>ورشة عمل</option><option>لقاء علمي</option></select>
-  <label>التاريخ</label><input id="edate" type="date">
-  <label>التفاصيل</label><textarea id="edesc"></textarea>
-  <button class="primary">نشر الفعالية</button>
- </form>
- <div id="eventList"></div>
+<section id="events" class="page">
+ <div class="section-head"><div><h2>الفعاليات الأكاديمية</h2><p class="sub">تابع المؤتمرات والندوات وورش العمل واللقاءات العلمية.</p></div></div>
+ <form class="form" id="form-events"><h3>إضافة فعالية</h3><div class="fields">
+  <div class="field"><label for="e-name">اسم الفعالية *</label><input id="e-name" required maxlength="160"></div>
+  <div class="field"><label for="e-type">نوع الفعالية</label><select id="e-type"><option>مؤتمر</option><option>ندوة</option><option>ورشة عمل</option><option>لقاء علمي</option><option>محاضرة</option></select></div>
+  <div class="field"><label for="e-date">التاريخ</label><input id="e-date" type="date"></div>
+  <div class="field"><label for="e-place">المكان أو الجهة المنظمة</label><input id="e-place" maxlength="140"></div>
+  <div class="field full"><label for="e-desc">التفاصيل</label><textarea id="e-desc" maxlength="800"></textarea></div>
+  <div class="field full"><label for="e-link">رابط التسجيل أو التفاصيل</label><input id="e-link" type="url" placeholder="https://"></div>
+ </div><div class="form-actions"><button class="btn btn-primary" type="submit">نشر الفعالية</button></div></form>
+ <div id="list-events" class="entries"></div>
 </section>
 
-<section id="ideas" class="section">
- <h2>الأفكار والمبادرات البحثية</h2>
- <p class="muted">شارك فكرة بحثية وافتح المجال للتعاون مع المهتمين.</p>
- <form onsubmit="addItem(event,'ideas')">
-  <h3>إضافة فكرة بحثية</h3>
-  <label>عنوان الفكرة</label><input id="iname" required>
-  <label>المجال</label><input id="ifield" required>
-  <label>تفاصيل الفكرة</label><textarea id="idesc"></textarea>
-  <button class="primary">نشر الفكرة</button>
- </form>
- <div id="ideaList"></div>
+<section id="ideas" class="page">
+ <div class="section-head"><div><h2>الأفكار والمبادرات البحثية</h2><p class="sub">شارك فكرة بحثية وافتح المجال للنقاش والتعاون.</p></div></div>
+ <form class="form" id="form-ideas"><h3>إضافة فكرة بحثية</h3><div class="fields">
+  <div class="field"><label for="i-name">عنوان الفكرة *</label><input id="i-name" required maxlength="160"></div>
+  <div class="field"><label for="i-field">المجال البحثي *</label><input id="i-field" required maxlength="120"></div>
+  <div class="field"><label for="i-author">صاحب الفكرة</label><input id="i-author" maxlength="100"></div>
+  <div class="field"><label for="i-status">مرحلة الفكرة</label><select id="i-status"><option>فكرة أولية</option><option>قيد التطوير</option><option>البحث عن شركاء</option><option>جاهزة للتنفيذ</option></select></div>
+  <div class="field full"><label for="i-desc">وصف الفكرة</label><textarea id="i-desc" maxlength="1000"></textarea></div>
+ </div><div class="form-actions"><button class="btn btn-primary" type="submit">نشر الفكرة</button></div></form>
+ <div id="list-ideas" class="entries"></div>
 </section>
 </main>
-
-<footer>
- <strong>مجتمعي الأكاديمي</strong><br>
- منصة رقمية لتعزيز التواصل والتعاون البحثي بين أعضاء هيئة التدريس<br>
- <small>نحو مجتمع أكاديمي أكثر تواصلًا وإنتاجًا للمعرفة</small>
-</footer>
+<footer><strong>✦ مجتمعي الأكاديمي</strong><br>منصة لتعزيز التواصل والتعاون البحثي بين أعضاء هيئة التدريس<br>نحو مجتمع أكاديمي أكثر تواصلًا وإنتاجًا للمعرفة</footer>
 
 <script>
-const keys={researchers:'researchers',teams:'teams',library:'library',events:'events',ideas:'ideas'};
+(function(){
+"use strict";
+const TYPES=["researchers","teams","library","events","ideas"];
+const labels={researchers:"الباحثون",teams:"الفرق البحثية",library:"المصادر العلمية",events:"الفعاليات",ideas:"الأفكار البحثية"};
 let data={};
-function load(){
- Object.keys(keys).forEach(k=>{
-  try{data[k]=JSON.parse(localStorage.getItem('academic_'+k)||'[]')}
-  catch(e){data[k]=[]}
+function readStore(key){try{const v=JSON.parse(localStorage.getItem("academic_v2_"+key)||"[]");return Array.isArray(v)?v:[]}catch(_){return[]}}
+function save(key){try{localStorage.setItem("academic_v2_"+key,JSON.stringify(data[key]));return true}catch(_){alert("تعذر الحفظ في المتصفح. قد تكون مساحة التخزين ممتلئة.");return false}}
+function text(id){const el=document.getElementById(id);return el?el.value.trim():""}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===page));document.querySelectorAll("nav [data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll("nav [data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+function entryCard(item,key,index){
+ const meta=item.meta||[];
+ const link=item.link&&/^https?:\/\//i.test(item.link)?'<p><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer">فتح الرابط</a></p>':"";
+ return '<article class="entry"><span class="pill">'+esc(item.tag||labels[key])+'</span><h3>'+esc(item.title)+'</h3>'+meta.filter(Boolean).map(x=>'<p>'+esc(x)+'</p>').join("")+link+'<button class="btn btn-danger" type="button" data-delete="'+key+'" data-index="'+index+'">حذف</button></article>';
+}
+function render(key){
+ let arr=data[key],q=key==="researchers"?text("search-researchers").toLowerCase():"";
+ let filtered=arr.map((x,i)=>({x,i})).filter(({x})=>!q||[x.title,...(x.meta||[])].join(" ").toLowerCase().includes(q));
+ const target=document.getElementById("list-"+key);
+ target.innerHTML=filtered.length?filtered.map(({x,i})=>entryCard(x,key,i)).join(""):'<div class="empty">لا توجد عناصر مضافة بعد. يمكنك إضافة أول عنصر من النموذج أعلاه.</div>';
+}
+function refresh(){
+ TYPES.forEach(k=>render(k));
+ ["researchers","teams","library","events"].forEach(k=>{const el=document.getElementById("count-"+k);if(el)el.textContent=data[k].length});
+}
+const specs={
+ researchers:{title:()=>text("r-name"),tag:()=>"ملف باحث",meta:()=>["التخصص: "+text("r-specialty"),text("r-university")?"الجهة: "+text("r-university"):"",text("r-role")?"الرتبة: "+text("r-role"):"",text("r-interest")?"الاهتمامات: "+text("r-interest"):"",text("r-contact")?"البريد: "+text("r-contact"):""]},
+ teams:{title:()=>text("t-name"),tag:()=>"فريق بحثي",meta:()=>["المجال: "+text("t-field"),text("t-leader")?"قائد الفريق: "+text("t-leader"):"",text("t-members")?"عدد الأعضاء: "+text("t-members"):"",text("t-desc")]},
+ library:{title:()=>text("l-name"),tag:()=>text("l-type"),link:()=>text("l-link"),meta:()=>[text("l-note")]},
+ events:{title:()=>text("e-name"),tag:()=>text("e-type"),link:()=>text("e-link"),meta:()=>[text("e-date")?"التاريخ: "+text("e-date"):"",text("e-place")?"المكان/الجهة: "+text("e-place"):"",text("e-desc")]},
+ ideas:{title:()=>text("i-name"),tag:()=>text("i-status"),meta:()=>["المجال: "+text("i-field"),text("i-author")?"صاحب الفكرة: "+text("i-author"):"",text("i-desc")]}
+};
+TYPES.forEach(key=>{
+ data[key]=readStore(key);
+ const form=document.getElementById("form-"+key);
+ form.addEventListener("submit",function(e){
+  e.preventDefault();const s=specs[key],title=s.title();
+  if(!title){alert("يرجى تعبئة الحقول المطلوبة.");return}
+  const item={id:(Date.now().toString(36)+Math.random().toString(36).slice(2,7)),title,tag:s.tag(),meta:s.meta().filter(Boolean),link:s.link?s.link():"",createdAt:new Date().toISOString()};
+  data[key].unshift(item);if(save(key)){form.reset();refresh();alert("تمت الإضافة بنجاح.");}
  });
- render();
-}
-function save(k){localStorage.setItem('academic_'+k,JSON.stringify(data[k]));}
-function show(id,btn){
- document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
- if(btn)btn.classList.add('active');
- render();
- window.scrollTo(0,0);
-}
-function val(id){return document.getElementById(id).value.trim();}
-function addItem(e,k){
- e.preventDefault();
- let item={};
- if(k==='researchers')item={name:val('rname'),specialty:val('rspecialty'),university:val('runiversity'),interest:val('rinterest')};
- if(k==='teams')item={name:val('tname'),field:val('tfield'),desc:val('tdesc')};
- if(k==='library')item={name:val('lname'),type:val('ltype'),link:val('llink')};
- if(k==='events')item={name:val('ename'),type:val('etype'),date:val('edate'),desc:val('edesc')};
- if(k==='ideas')item={name:val('iname'),field:val('ifield'),desc:val('idesc')};
- data[k].unshift(item);
- save(k);
- e.target.reset();
- render();
- alert('تمت الإضافة بنجاح!');
-}
-function card(item,k){
- let title=item.name||'';
- let details=[];
- if(item.specialty)details.push('التخصص: '+item.specialty);
- if(item.university)details.push('الجهة: '+item.university);
- if(item.interest)details.push('الاهتمامات: '+item.interest);
- if(item.field)details.push('المجال: '+item.field);
- if(item.type)details.push('النوع: '+item.type);
- if(item.date)details.push('التاريخ: '+item.date);
- if(item.desc)details.push(item.desc);
- if(item.link)details.push('الرابط: '+item.link);
- return '<div class="item"><h3>'+escapeHTML(title)+'</h3><p>'+details.map(escapeHTML).join('<br>')+'</p><button onclick="removeItem(\\''+k+'\\','+data[k].indexOf(item)+')" style="border:0;background:#f5e9e8;color:#984b43;padding:7px 12px;border-radius:6px">حذف</button></div>';
-}
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function removeItem(k,i){
- if(confirm('هل تريد حذف هذا العنصر؟')){
- data[k].splice(i,1);save(k);render();
- }
-}
-function render(){
- let q=(document.getElementById('researchSearch')?.value||'').toLowerCase();
- let filtered=data.researchers.filter(x=>(x.name+x.specialty+x.university+x.interest).toLowerCase().includes(q));
- document.getElementById('researchList').innerHTML=filtered.map(x=>card(x,'researchers')).join('');
- document.getElementById('teamList').innerHTML=data.teams.map(x=>card(x,'teams')).join('');
- document.getElementById('libraryList').innerHTML=data.library.map(x=>card(x,'library')).join('');
- document.getElementById('eventList').innerHTML=data.events.map(x=>card(x,'events')).join('');
- document.getElementById('ideaList').innerHTML=data.ideas.map(x=>card(x,'ideas')).join('');
- document.getElementById('researcherCount').textContent=data.researchers.length;
- document.getElementById('teamCount').textContent=data.teams.length;
- document.getElementById('resourceCount').textContent=data.library.length;
- document.getElementById('eventCount').textContent=data.events.length;
-}
-load();
+});
+document.getElementById("search-researchers").addEventListener("input",()=>render("researchers"));
+document.addEventListener("click",function(e){
+ const b=e.target.closest("[data-delete]");if(!b)return;
+ const key=b.dataset.delete,index=Number(b.dataset.index);
+ if(!TYPES.includes(key)||!Number.isInteger(index)||index<0||index>=data[key].length)return;
+ if(confirm("هل تريد حذف هذا العنصر؟")){data[key].splice(index,1);if(save(key))refresh()}
+});
+refresh();
+})();
 </script>
 </body>
 </html>
