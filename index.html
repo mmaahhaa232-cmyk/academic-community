@@ -49,7 +49,7 @@ footer strong{color:#e6cc99;font-size:15px}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.entries{grid-template-columns:1fr}.hero{padding:25px 20px}.hero h2{font-size:22px}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.header-note{display:none}main{margin:18px auto}.brand h1{font-size:18px}}
 
-body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!important}
+body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!important}#form-researchers{display:none!important}
 .auth-screen{min-height:75vh;display:grid;place-items:center;padding:28px 16px;background:var(--bg)}
 .auth-card{width:min(100%,540px);background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;box-shadow:0 10px 35px #102a4312}
 .auth-brand{color:#a78343;font-weight:bold;font-size:18px;margin-bottom:10px}
@@ -246,11 +246,11 @@ $("signup-form").addEventListener("submit",async e=>{
 });
 async function loadSession(session){
  currentUser=session?.user||null;
- if(!currentUser){await logout();return;}
+ if(!currentUser){currentProfile=null;$("member-bar").hidden=true;$("admin-panel").hidden=true;showOnly("auth-screen");return;}
  const {data,error}=await db.from("profiles").select("id,full_name,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio,membership_status,account_role,created_at").eq("id",currentUser.id).single();
  if(error){showOnly("auth-screen");message("تعذر تحميل ملف العضوية. تأكدي من تنفيذ ملف إعداد قاعدة البيانات في Supabase.");return;}
  currentProfile=data;
- if(data.membership_status!=="approved"){showOnly("pending-screen");return;}
+ if(data.membership_status!=="approved"){showOnly("pending-screen");if(data.membership_status==="rejected"){$("pending-screen").querySelector("h2").textContent="تعذر اعتماد طلب العضوية";$("pending-screen").querySelector("p").textContent="لم تتم الموافقة على طلب العضوية. يمكنك التواصل مع إدارة المجتمع للاستفسار.";}return;}
  showMember();await refreshAll();
 }
 db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>loadSession(session),0)});
