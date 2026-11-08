@@ -84,6 +84,25 @@ create trigger on_auth_user_created_profile
 after insert on auth.users
 for each row execute procedure public.create_profile_for_new_user();
 
+-- استيراد الحسابات التي أُنشئت قبل تشغيل هذا الملف لأول مرة.
+insert into public.profiles (
+  id, full_name, email, researcher_type, specialty, affiliation,
+  academic_title, orcid_url, scholar_url, bio
+)
+select
+  u.id,
+  coalesce(u.raw_user_meta_data->>'full_name',''),
+  u.email,
+  coalesce(u.raw_user_meta_data->>'researcher_type','باحث'),
+  nullif(u.raw_user_meta_data->>'specialty',''),
+  nullif(u.raw_user_meta_data->>'affiliation',''),
+  nullif(u.raw_user_meta_data->>'academic_title',''),
+  nullif(u.raw_user_meta_data->>'orcid_url',''),
+  nullif(u.raw_user_meta_data->>'scholar_url',''),
+  nullif(u.raw_user_meta_data->>'bio','')
+from auth.users u
+on conflict (id) do nothing;
+
 -- منع المستخدم من اعتماد عضويته أو منح نفسه صلاحية مسؤول.
 create or replace function public.protect_profile_permissions()
 returns trigger
