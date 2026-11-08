@@ -48,6 +48,25 @@ footer{margin-top:45px;background:var(--navy);color:#d9e3eb;text-align:center;pa
 footer strong{color:#e6cc99;font-size:15px}
 @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.entries{grid-template-columns:1fr}.hero{padding:25px 20px}.hero h2{font-size:22px}}
 @media(max-width:480px){.grid{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.header-note{display:none}main{margin:18px auto}.brand h1{font-size:18px}}
+
+body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!important}
+.auth-screen{min-height:75vh;display:grid;place-items:center;padding:28px 16px;background:var(--bg)}
+.auth-card{width:min(100%,540px);background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;box-shadow:0 10px 35px #102a4312}
+.auth-brand{color:#a78343;font-weight:bold;font-size:18px;margin-bottom:10px}
+.auth-card h2{color:var(--navy);margin:5px 0;font-size:22px}
+.auth-intro,.status-card p{color:var(--muted);font-size:13px;margin:7px 0 17px}
+.auth-tabs{display:flex;gap:8px;margin:18px 0}
+.auth-tabs button{flex:1;border:1px solid var(--line);background:#f7f9fb;border-radius:8px;padding:10px;font:inherit;cursor:pointer}
+.auth-tabs button.selected{background:#eaf0f5;border-color:#9aafc0;color:var(--navy);font-weight:bold}
+.auth-submit{width:100%;margin-top:18px}
+.auth-message{font-size:13px;color:var(--blue);min-height:22px;margin:12px 0 0;white-space:pre-wrap}
+.status-card{text-align:center}
+.status-card .btn{margin-top:12px}
+.member-bar{max-width:1120px;margin:15px auto 0;padding:0 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px}
+.admin-panel{max-width:1120px;margin:18px auto;padding:18px;background:#fff;border:1px solid var(--line);border-radius:13px}
+.admin-panel .entry button{margin:5px 4px 0 0}
+@media(max-width:480px){.auth-card{padding:19px}.member-bar{align-items:flex-start}}
+
 </style>
 </head>
 <body>
@@ -55,6 +74,40 @@ footer strong{color:#e6cc99;font-size:15px}
  <div class="brand"><div class="brand-mark">✦</div><div><h1>مجتمعي الأكاديمي</h1><p>مساحة تجمع العقول وتصنع فرص التعاون العلمي</p></div></div>
  <div class="header-note">منصة للتواصل وتبادل المعرفة وبناء الشراكات البحثية</div>
 </header>
+
+<section id="auth-screen" class="auth-screen">
+ <div class="auth-card">
+  <div class="auth-brand">✦ مجتمعي الأكاديمي</div>
+  <h2>مرحبًا بك في مجتمعنا الأكاديمي</h2>
+  <p class="auth-intro">منصة دولية تجمع أعضاء هيئة التدريس والباحثين. يتطلب الوصول اعتماد طلب العضوية من إدارة المجتمع.</p>
+  <div class="auth-tabs"><button type="button" id="tab-login" class="selected">تسجيل الدخول</button><button type="button" id="tab-signup">طلب عضوية</button></div>
+  <form id="login-form">
+   <label for="login-email">البريد الإلكتروني</label><input id="login-email" type="email" required autocomplete="email">
+   <label for="login-password">كلمة المرور</label><input id="login-password" type="password" required autocomplete="current-password">
+   <button class="btn btn-primary auth-submit" type="submit">دخول</button>
+  </form>
+  <form id="signup-form" hidden>
+   <label for="signup-name">الاسم الكامل *</label><input id="signup-name" required maxlength="100" autocomplete="name">
+   <label for="signup-email">البريد الإلكتروني *</label><input id="signup-email" type="email" required autocomplete="email">
+   <label for="signup-password">كلمة المرور *</label><input id="signup-password" type="password" required minlength="8" autocomplete="new-password">
+   <label for="signup-type">الصفة الأكاديمية *</label><select id="signup-type" required><option value="عضو هيئة تدريس">عضو هيئة تدريس</option><option value="باحث">باحث</option><option value="باحث مستقل">باحث مستقل</option><option value="طالب دراسات عليا">طالب دراسات عليا</option><option value="أخرى">أخرى</option></select>
+   <label for="signup-specialty">التخصص *</label><input id="signup-specialty" required maxlength="120">
+   <label for="signup-affiliation">الجامعة أو جهة الانتساب</label><input id="signup-affiliation" maxlength="150">
+   <label for="signup-title">الرتبة أو المسمى الأكاديمي</label><input id="signup-title" maxlength="100">
+   <label for="signup-orcid">رابط ORCID (اختياري)</label><input id="signup-orcid" type="url" placeholder="https://orcid.org/...">
+   <label for="signup-scholar">رابط Google Scholar (اختياري)</label><input id="signup-scholar" type="url" placeholder="https://scholar.google.com/...">
+   <label for="signup-bio">نبذة مختصرة</label><textarea id="signup-bio" maxlength="500"></textarea>
+   <button class="btn btn-primary auth-submit" type="submit">إرسال طلب العضوية</button>
+  </form>
+  <p id="auth-message" class="auth-message" role="status"></p>
+ </div>
+</section>
+<section id="pending-screen" class="auth-screen" hidden>
+ <div class="auth-card status-card"><div class="auth-brand">✦ مجتمعي الأكاديمي</div><h2>طلب العضوية قيد المراجعة</h2><p>شكرًا لتسجيلك. سيُتاح لك دخول المجتمع بعد مراجعة طلبك واعتماده من الإدارة.</p><button id="pending-logout" class="btn btn-outline">تسجيل الخروج</button></div>
+</section>
+<div id="member-bar" class="member-bar" hidden><span id="member-greeting"></span><div><button id="admin-toggle" class="btn btn-outline" hidden>إدارة طلبات العضوية</button> <button id="logout-button" class="btn btn-outline">تسجيل الخروج</button></div></div>
+<section id="admin-panel" class="admin-panel" hidden><div class="section-head"><div><h2>طلبات العضوية</h2><p class="sub">راجعي بيانات المتقدمين ثم اعتمدي العضوية أو ارفضيها.</p></div><button id="close-admin" class="btn btn-outline">إغلاق</button></div><div id="pending-list" class="entries"></div></section>
+
 <nav aria-label="التنقل الرئيسي">
  <button class="active" data-page="home">الرئيسية</button>
  <button data-page="researchers">الباحثون</button>
@@ -149,59 +202,128 @@ footer strong{color:#e6cc99;font-size:15px}
 </main>
 <footer><strong>✦ مجتمعي الأكاديمي</strong><br>منصة لتعزيز التواصل والتعاون البحثي بين أعضاء هيئة التدريس<br>نحو مجتمع أكاديمي أكثر تواصلًا وإنتاجًا للمعرفة</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
 "use strict";
+const SUPABASE_URL="https://igapmpiaosmxqwyrqedi.supabase.co";
+const SUPABASE_KEY="sb_publishable_x6eG-sTVDI4djW219kcbXg_S5XGXoyX";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const TYPES=["researchers","teams","library","events","ideas"];
 const labels={researchers:"الباحثون",teams:"الفرق البحثية",library:"المصادر العلمية",events:"الفعاليات",ideas:"الأفكار البحثية"};
-let data={};
-function readStore(key){try{const v=JSON.parse(localStorage.getItem("academic_v2_"+key)||"[]");return Array.isArray(v)?v:[]}catch(_){return[]}}
-function save(key){try{localStorage.setItem("academic_v2_"+key,JSON.stringify(data[key]));return true}catch(_){alert("تعذر الحفظ في المتصفح. قد تكون مساحة التخزين ممتلئة.");return false}}
-function text(id){const el=document.getElementById(id);return el?el.value.trim():""}
-function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===page));document.querySelectorAll("nav [data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"})}
-document.querySelectorAll("nav [data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
-document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
-function entryCard(item,key,index){
- const meta=item.meta||[];
- const link=item.link&&/^https?:\/\//i.test(item.link)?'<p><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer">فتح الرابط</a></p>':"";
- return '<article class="entry"><span class="pill">'+esc(item.tag||labels[key])+'</span><h3>'+esc(item.title)+'</h3>'+meta.filter(Boolean).map(x=>'<p>'+esc(x)+'</p>').join("")+link+'<button class="btn btn-danger" type="button" data-delete="'+key+'" data-index="'+index+'">حذف</button></article>';
+let currentUser=null,currentProfile=null,items={};
+const $=id=>document.getElementById(id);
+const val=id=>$(id)?.value.trim()||"";
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function message(s){$("auth-message").textContent=s||""}
+function setAuthTab(tab){
+ $("login-form").hidden=tab!=="login";$("signup-form").hidden=tab!=="signup";
+ $("tab-login").classList.toggle("selected",tab==="login");$("tab-signup").classList.toggle("selected",tab==="signup");message("");
+}
+$("tab-login").addEventListener("click",()=>setAuthTab("login"));
+$("tab-signup").addEventListener("click",()=>setAuthTab("signup"));
+function showOnly(id){["auth-screen","pending-screen"].forEach(x=>$(x).hidden=x!==id);document.body.classList.remove("ready");}
+function showMember(){
+ $("auth-screen").hidden=true;$("pending-screen").hidden=true;document.body.classList.add("ready");
+ $("member-bar").hidden=false;$("member-greeting").textContent="مرحبًا، "+(currentProfile.full_name||currentUser.email);
+ $("admin-toggle").hidden=currentProfile.account_role!=="admin";
+}
+async function logout(){await db.auth.signOut();currentUser=null;currentProfile=null;$("member-bar").hidden=true;$("admin-panel").hidden=true;document.body.classList.remove("ready");showOnly("auth-screen");}
+$("logout-button").addEventListener("click",logout);$("pending-logout").addEventListener("click",logout);
+$("login-form").addEventListener("submit",async e=>{
+ e.preventDefault();message("جارٍ تسجيل الدخول...");
+ const {error}=await db.auth.signInWithPassword({email:val("login-email"),password:val("login-password")});
+ if(error)message("تعذر تسجيل الدخول: "+error.message);
+});
+$("signup-form").addEventListener("submit",async e=>{
+ e.preventDefault();message("جارٍ إرسال طلب العضوية...");
+ const email=val("signup-email"),password=val("signup-password");
+ const meta={full_name:val("signup-name"),researcher_type:val("signup-type"),specialty:val("signup-specialty"),affiliation:val("signup-affiliation"),academic_title:val("signup-title"),orcid_url:val("signup-orcid"),scholar_url:val("signup-scholar"),bio:val("signup-bio")};
+ const {data,error}=await db.auth.signUp({email,password,options:{data:meta,emailRedirectTo:location.origin+location.pathname}});
+ if(error){message("تعذر إنشاء الحساب: "+error.message);return;}
+ if(data.session){message("تم إنشاء الحساب. طلبك الآن قيد المراجعة.");}
+ else{message("تم إرسال طلب التسجيل. افتحي بريدك الإلكتروني واضغطي رابط التأكيد، ثم سجّلي الدخول لمتابعة حالة العضوية.");setAuthTab("login");}
+});
+async function loadSession(session){
+ currentUser=session?.user||null;
+ if(!currentUser){await logout();return;}
+ const {data,error}=await db.from("profiles").select("id,full_name,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio,membership_status,account_role,created_at").eq("id",currentUser.id).single();
+ if(error){showOnly("auth-screen");message("تعذر تحميل ملف العضوية. تأكدي من تنفيذ ملف إعداد قاعدة البيانات في Supabase.");return;}
+ currentProfile=data;
+ if(data.membership_status!=="approved"){showOnly("pending-screen");return;}
+ showMember();await refreshAll();
+}
+db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>loadSession(session),0)});
+async function refreshAll(){
+ await Promise.all([loadItems(),loadResearchers()]);
+}
+async function loadItems(){
+ const {data,error}=await db.from("community_items").select("id,category,title,details,owner_id,created_at").order("created_at",{ascending:false});
+ if(error){console.error(error);return;}
+ items={};TYPES.forEach(k=>items[k]=[]);
+ (data||[]).forEach(x=>{if(x.category!=="researchers")items[x.category].push(x)});
+ TYPES.filter(k=>k!=="researchers").forEach(render);
+ ["teams","library","events"].forEach(k=>{$("count-"+k).textContent=items[k].length});
+}
+function card(item,key){
+ const d=item.details||{},owner=item.owner_id===currentUser.id||currentProfile.account_role==="admin";
+ const meta=(d.meta||[]).filter(Boolean).map(x=>"<p>"+esc(x)+"</p>").join("");
+ const link=d.link&&/^https?:\/\//i.test(d.link)?"<p><a href=\""+esc(d.link)+"\" target=\"_blank\" rel=\"noopener noreferrer\">فتح الرابط</a></p>":"";
+ return '<article class="entry"><span class="pill">'+esc(item.tag||d.tag||labels[key])+'</span><h3>'+esc(item.title)+'</h3>'+meta+link+(owner?'<button class="btn btn-danger" data-delete="'+esc(item.id)+'">حذف</button>':"")+'</article>';
 }
 function render(key){
- let arr=data[key],q=key==="researchers"?text("search-researchers").toLowerCase():"";
- let filtered=arr.map((x,i)=>({x,i})).filter(({x})=>!q||[x.title,...(x.meta||[])].join(" ").toLowerCase().includes(q));
- const target=document.getElementById("list-"+key);
- target.innerHTML=filtered.length?filtered.map(({x,i})=>entryCard(x,key,i)).join(""):'<div class="empty">لا توجد عناصر مضافة بعد. يمكنك إضافة أول عنصر من النموذج أعلاه.</div>';
+ const q=key==="researchers"?val("search-researchers").toLowerCase():"";
+ let arr=items[key]||[];
+ if(q)arr=arr.filter(x=>[x.title,...(x.details?.meta||[])].join(" ").toLowerCase().includes(q));
+ $("list-"+key).innerHTML=arr.length?arr.map(x=>card(x,key)).join(""):'<div class="empty">لا توجد عناصر مضافة بعد.</div>';
 }
-function refresh(){
- TYPES.forEach(k=>render(k));
- ["researchers","teams","library","events"].forEach(k=>{const el=document.getElementById("count-"+k);if(el)el.textContent=data[k].length});
+async function loadResearchers(){
+ const {data,error}=await db.from("profiles").select("id,full_name,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio").eq("membership_status","approved").order("full_name");
+ if(error){console.error(error);return;}
+ const q=val("search-researchers").toLowerCase();
+ const rows=(data||[]).filter(p=>[p.full_name,p.specialty,p.affiliation,p.researcher_type].join(" ").toLowerCase().includes(q));
+ $("list-researchers").innerHTML=rows.length?rows.map(p=>'<article class="entry"><span class="pill">'+esc(p.researcher_type)+'</span><h3>'+esc(p.full_name)+'</h3><p>التخصص: '+esc(p.specialty||"غير محدد")+'</p><p>الجهة: '+esc(p.affiliation||"غير محددة")+'</p><p>'+esc(p.academic_title||"")+'</p><p>'+esc(p.bio||"")+'</p>'+(p.orcid_url?'<p><a href="'+esc(p.orcid_url)+'" target="_blank" rel="noopener noreferrer">ORCID</a></p>':"")+(p.scholar_url?'<p><a href="'+esc(p.scholar_url)+'" target="_blank" rel="noopener noreferrer">Google Scholar</a></p>':"")+'</article>').join(""):'<div class="empty">لا توجد ملفات باحثين معتمدة حتى الآن.</div>';
+ $("count-researchers").textContent=(data||[]).length;
 }
 const specs={
- researchers:{title:()=>text("r-name"),tag:()=>"ملف باحث",meta:()=>["التخصص: "+text("r-specialty"),text("r-university")?"الجهة: "+text("r-university"):"",text("r-role")?"الرتبة: "+text("r-role"):"",text("r-interest")?"الاهتمامات: "+text("r-interest"):"",text("r-contact")?"البريد: "+text("r-contact"):""]},
- teams:{title:()=>text("t-name"),tag:()=>"فريق بحثي",meta:()=>["المجال: "+text("t-field"),text("t-leader")?"قائد الفريق: "+text("t-leader"):"",text("t-members")?"عدد الأعضاء: "+text("t-members"):"",text("t-desc")]},
- library:{title:()=>text("l-name"),tag:()=>text("l-type"),link:()=>text("l-link"),meta:()=>[text("l-note")]},
- events:{title:()=>text("e-name"),tag:()=>text("e-type"),link:()=>text("e-link"),meta:()=>[text("e-date")?"التاريخ: "+text("e-date"):"",text("e-place")?"المكان/الجهة: "+text("e-place"):"",text("e-desc")]},
- ideas:{title:()=>text("i-name"),tag:()=>text("i-status"),meta:()=>["المجال: "+text("i-field"),text("i-author")?"صاحب الفكرة: "+text("i-author"):"",text("i-desc")]}
+ teams:{title:()=>val("t-name"),tag:()=>"فريق بحثي",meta:()=>["المجال: "+val("t-field"),val("t-leader")?"قائد الفريق: "+val("t-leader"):"",val("t-members")?"عدد الأعضاء: "+val("t-members"):"",val("t-desc")]},
+ library:{title:()=>val("l-name"),tag:()=>val("l-type"),link:()=>val("l-link"),meta:()=>[val("l-note")]},
+ events:{title:()=>val("e-name"),tag:()=>val("e-type"),link:()=>val("e-link"),meta:()=>[val("e-date")?"التاريخ: "+val("e-date"):"",val("e-place")?"المكان/الجهة: "+val("e-place"):"",val("e-desc")]},
+ ideas:{title:()=>val("i-name"),tag:()=>val("i-status"),meta:()=>["المجال: "+val("i-field"),val("i-author")?"صاحب الفكرة: "+val("i-author"):"",val("i-desc")]}
 };
-TYPES.forEach(key=>{
- data[key]=readStore(key);
- const form=document.getElementById("form-"+key);
- form.addEventListener("submit",function(e){
-  e.preventDefault();const s=specs[key],title=s.title();
-  if(!title){alert("يرجى تعبئة الحقول المطلوبة.");return}
-  const item={id:(Date.now().toString(36)+Math.random().toString(36).slice(2,7)),title,tag:s.tag(),meta:s.meta().filter(Boolean),link:s.link?s.link():"",createdAt:new Date().toISOString()};
-  data[key].unshift(item);if(save(key)){form.reset();refresh();alert("تمت الإضافة بنجاح.");}
+Object.entries(specs).forEach(([key,s])=>{
+ $("form-"+key).addEventListener("submit",async e=>{
+  e.preventDefault();const title=s.title();if(!title)return;
+  const {error}=await db.from("community_items").insert({category:key,title,owner_id:currentUser.id,details:{tag:s.tag(),meta:s.meta().filter(Boolean),link:s.link?s.link():""}});
+  if(error){alert("تعذر الحفظ: "+error.message);return;}
+  e.target.reset();await loadItems();alert("تمت الإضافة بنجاح.");
  });
 });
-document.getElementById("search-researchers").addEventListener("input",()=>render("researchers"));
-document.addEventListener("click",function(e){
+$("search-researchers").addEventListener("input",loadResearchers);
+document.addEventListener("click",async e=>{
  const b=e.target.closest("[data-delete]");if(!b)return;
- const key=b.dataset.delete,index=Number(b.dataset.index);
- if(!TYPES.includes(key)||!Number.isInteger(index)||index<0||index>=data[key].length)return;
- if(confirm("هل تريد حذف هذا العنصر؟")){data[key].splice(index,1);if(save(key))refresh()}
+ if(!confirm("هل تريد حذف هذا العنصر؟"))return;
+ const {error}=await db.from("community_items").delete().eq("id",b.dataset.delete);
+ if(error){alert("تعذر الحذف: "+error.message);return;}await loadItems();
 });
-refresh();
+async function loadPending(){
+ const {data,error}=await db.from("profiles").select("id,full_name,email,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio,created_at").eq("membership_status","pending").order("created_at");
+ if(error){$("pending-list").textContent="تعذر تحميل الطلبات: "+error.message;return;}
+ $("pending-list").innerHTML=(data||[]).length?data.map(p=>'<article class="entry"><h3>'+esc(p.full_name)+'</h3><p>'+esc(p.email)+'</p><p>'+esc(p.researcher_type)+' — '+esc(p.specialty||"")+'</p><p>'+esc(p.affiliation||"")+' '+esc(p.academic_title||"")+'</p><p>'+esc(p.bio||"")+'</p>'+(p.orcid_url?'<p><a href="'+esc(p.orcid_url)+'" target="_blank" rel="noopener noreferrer">ORCID</a></p>':"")+(p.scholar_url?'<p><a href="'+esc(p.scholar_url)+'" target="_blank" rel="noopener noreferrer">Google Scholar</a></p>':"")+'<button class="btn btn-primary" data-approve="'+p.id+'">اعتماد العضوية</button> <button class="btn btn-danger" data-reject="'+p.id+'">رفض الطلب</button></article>').join(""):'<div class="empty">لا توجد طلبات معلقة.</div>';
+}
+$("admin-toggle").addEventListener("click",async()=>{$("admin-panel").hidden=false;await loadPending();$("admin-panel").scrollIntoView({behavior:"smooth"});});
+$("close-admin").addEventListener("click",()=>$("admin-panel").hidden=true);
+document.addEventListener("click",async e=>{
+ const approve=e.target.closest("[data-approve]"),reject=e.target.closest("[data-reject]");if(!approve&&!reject)return;
+ const id=(approve||reject).dataset.approve||(approve||reject).dataset.reject;
+ const status=approve?"approved":"rejected";
+ const {error}=await db.from("profiles").update({membership_status:status}).eq("id",id);
+ if(error){alert("تعذر تحديث العضوية: "+error.message);return;}
+ await loadPending();await loadResearchers();
+});
+document.querySelectorAll("nav [data-page]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===b.dataset.page));document.querySelectorAll("nav [data-page]").forEach(x=>x.classList.toggle("active",x===b));window.scrollTo({top:0,behavior:"smooth"});}));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===b.dataset.go));document.querySelectorAll("nav [data-page]").forEach(x=>x.classList.toggle("active",x.dataset.page===b.dataset.go));}));
+(async()=>{const {data}=await db.auth.getSession();await loadSession(data.session);})();
 })();
 </script>
 </body>
