@@ -55,6 +55,7 @@ body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!
 .auth-brand{color:#a78343;font-weight:bold;font-size:18px;margin-bottom:10px}
 .auth-card h2{color:var(--navy);margin:5px 0;font-size:22px}
 .auth-intro,.status-card p{color:var(--muted);font-size:13px;margin:7px 0 17px}
+.file-hint{font-size:12px;color:var(--muted);margin:4px 0 10px}
 .auth-tabs{display:flex;gap:8px;margin:18px 0}
 .auth-tabs button{flex:1;border:1px solid var(--line);background:#f7f9fb;border-radius:8px;padding:10px;font:inherit;cursor:pointer}
 .auth-tabs button.selected{background:#eaf0f5;border-color:#9aafc0;color:var(--navy);font-weight:bold}
@@ -79,7 +80,7 @@ body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!
  <div class="auth-card">
   <div class="auth-brand">✦ مجتمعي الأكاديمي</div>
   <h2>مرحبًا بك في مجتمعنا الأكاديمي</h2>
-  <p class="auth-intro">منصة دولية تجمع أعضاء هيئة التدريس والباحثين. يتطلب الوصول اعتماد طلب العضوية من إدارة المجتمع.</p>
+  <p class="auth-intro">منصة دولية تجمع أعضاء هيئة التدريس والباحثين. سجّل حسابك وأكمل ملفك الأكاديمي لتدخل مباشرة دون انتظار موافقة إدارية.</p>
   <div class="auth-tabs"><button type="button" id="tab-login" class="selected">تسجيل الدخول</button><button type="button" id="tab-signup">طلب عضوية</button></div>
   <form id="login-form">
    <label for="login-email">البريد الإلكتروني</label><input id="login-email" type="email" required autocomplete="email">
@@ -92,14 +93,29 @@ body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!
    <label for="signup-password">كلمة المرور *</label><input id="signup-password" type="password" required minlength="8" autocomplete="new-password">
    <label for="signup-type">الصفة الأكاديمية *</label><select id="signup-type" required><option value="عضو هيئة تدريس">عضو هيئة تدريس</option><option value="باحث">باحث</option><option value="باحث مستقل">باحث مستقل</option><option value="طالب دراسات عليا">طالب دراسات عليا</option><option value="أخرى">أخرى</option></select>
    <label for="signup-specialty">التخصص *</label><input id="signup-specialty" required maxlength="120">
-   <label for="signup-affiliation">الجامعة أو جهة الانتساب</label><input id="signup-affiliation" maxlength="150">
-   <label for="signup-title">الرتبة أو المسمى الأكاديمي</label><input id="signup-title" maxlength="100">
+   <label for="signup-affiliation">الجامعة أو جهة الانتساب *</label><input id="signup-affiliation" required maxlength="150">
+   <label for="signup-title">الرتبة أو المسمى الأكاديمي *</label><input id="signup-title" required maxlength="100" placeholder="مثال: أستاذ مساعد، باحث، طالب دكتوراه">
    <label for="signup-orcid">رابط ORCID (اختياري)</label><input id="signup-orcid" type="url" placeholder="https://orcid.org/...">
    <label for="signup-scholar">رابط Google Scholar (اختياري)</label><input id="signup-scholar" type="url" placeholder="https://scholar.google.com/...">
    <label for="signup-bio">نبذة مختصرة</label><textarea id="signup-bio" maxlength="500"></textarea>
-   <button class="btn btn-primary auth-submit" type="submit">إرسال طلب العضوية</button>
+   <button class="btn btn-primary auth-submit" type="submit">إنشاء الحساب</button>
   </form>
   <p id="auth-message" class="auth-message" role="status"></p>
+ </div>
+</section>
+<section id="profile-completion" class="auth-screen" hidden>
+ <div class="auth-card"><div class="auth-brand">✦ مجتمعي الأكاديمي</div><h2>استكمال الملف الأكاديمي</h2>
+ <p class="auth-intro">بقيت خطوة واحدة قبل دخول المجتمع: أرفق سيرتك الذاتية بصيغة PDF، وتأكد من بياناتك الأكاديمية.</p>
+ <form id="profile-completion-form">
+  <label for="completion-affiliation">الجامعة أو جهة الانتساب *</label><input id="completion-affiliation" required maxlength="150">
+  <label for="completion-title">الرتبة أو المسمى الأكاديمي *</label><input id="completion-title" required maxlength="100">
+  <label for="completion-orcid">رابط ORCID (اختياري)</label><input id="completion-orcid" type="url" placeholder="https://orcid.org/...">
+  <label for="completion-scholar">رابط Google Scholar (اختياري)</label><input id="completion-scholar" type="url" placeholder="https://scholar.google.com/...">
+  <label for="completion-bio">نبذة أكاديمية مختصرة (اختياري)</label><textarea id="completion-bio" maxlength="700"></textarea>
+  <label for="profile-cv">السيرة الذاتية بصيغة PDF *</label><input id="profile-cv" type="file" accept="application/pdf,.pdf" required>
+  <p class="file-hint">ملف PDF فقط، بحد أقصى 10 ميجابايت. السيرة الذاتية محفوظة في مساحة خاصة ولا تظهر للعامة.</p>
+  <button class="btn btn-primary auth-submit" type="submit">حفظ الملف والدخول إلى المنصة</button>
+ </form><p id="completion-message" class="auth-message" role="status"></p>
  </div>
 </section>
 <section id="pending-screen" class="auth-screen" hidden>
@@ -134,11 +150,11 @@ body:not(.ready) main,body:not(.ready) nav,body:not(.ready) footer{display:none!
   <article class="feature"><div class="ico">💡</div><h3>الأفكار البحثية</h3><p>طرح المقترحات والمبادرات وفتح فرص التعاون.</p></article>
   <article class="feature"><div class="ico">🌐</div><h3>الشراكات العلمية</h3><p>اكتشاف فرص التعاون بين التخصصات والباحثين.</p></article>
  </div>
- <div class="notice">هذه نسخة أولية تجريبية. تُحفظ البيانات حاليًا في المتصفح المستخدم فقط؛ ولا تظهر تلقائيًا لبقية أعضاء هيئة التدريس. تفعيل الحسابات وقاعدة البيانات المشتركة يتطلب إعداد خدمة خلفية آمنة.</div>
+ 
 </section>
 
 <section id="researchers" class="page">
- <div class="section-head"><div><h2>دليل أعضاء هيئة التدريس والباحثين</h2><p class="sub">أضف ملفًا تعريفيًا أو ابحث في الملفات المسجلة على هذا المتصفح.</p></div></div>
+ <div class="section-head"><div><h2>دليل أعضاء هيئة التدريس والباحثين</h2><p class="sub">ابحث في الملفات الأكاديمية لأعضاء المجتمع.</p></div></div>
  <input class="search" id="search-researchers" type="search" placeholder="ابحث بالاسم أو التخصص أو الجهة...">
  <form class="form" id="form-researchers">
   <h3>إضافة ملف باحث</h3><div class="fields">
@@ -222,7 +238,7 @@ function setAuthTab(tab){
 }
 $("tab-login").addEventListener("click",()=>setAuthTab("login"));
 $("tab-signup").addEventListener("click",()=>setAuthTab("signup"));
-function showOnly(id){["auth-screen","pending-screen"].forEach(x=>$(x).hidden=x!==id);document.body.classList.remove("ready");}
+function showOnly(id){["auth-screen","pending-screen","profile-completion"].forEach(x=>$(x).hidden=x!==id);document.body.classList.remove("ready");}
 function showMember(){
  $("auth-screen").hidden=true;$("pending-screen").hidden=true;document.body.classList.add("ready");
  $("member-bar").hidden=false;$("member-greeting").textContent="مرحبًا، "+(currentProfile.full_name||currentUser.email);
@@ -236,21 +252,44 @@ $("login-form").addEventListener("submit",async e=>{
  if(error)message("تعذر تسجيل الدخول: "+error.message);
 });
 $("signup-form").addEventListener("submit",async e=>{
- e.preventDefault();message("جارٍ إرسال طلب العضوية...");
+ e.preventDefault();message("جارٍ إنشاء الحساب...");
  const email=val("signup-email"),password=val("signup-password");
  const meta={full_name:val("signup-name"),researcher_type:val("signup-type"),specialty:val("signup-specialty"),affiliation:val("signup-affiliation"),academic_title:val("signup-title"),orcid_url:val("signup-orcid"),scholar_url:val("signup-scholar"),bio:val("signup-bio")};
  const {data,error}=await db.auth.signUp({email,password,options:{data:meta,emailRedirectTo:location.origin+location.pathname}});
  if(error){message("تعذر إنشاء الحساب: "+error.message);return;}
- if(data.session){message("تم إنشاء الحساب. طلبك الآن قيد المراجعة.");}
- else{message("تم إرسال طلب التسجيل. افتحي بريدك الإلكتروني واضغطي رابط التأكيد، ثم سجّلي الدخول لمتابعة حالة العضوية.");setAuthTab("login");}
+ if(data.session){message("تم إنشاء الحساب. جارٍ إعداد ملفك الأكاديمي...");await loadSession(data.session);}
+ else{message("تم إنشاء الحساب. افتحي بريدك الإلكتروني واضغطي رابط التأكيد، ثم سجّلي الدخول لإرفاق السيرة الذاتية والدخول مباشرة.");setAuthTab("login");}
+});
+$("profile-completion-form").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const file=$("profile-cv").files[0];
+ if(!file){$("completion-message").textContent="أرفق السيرة الذاتية أولًا.";return;}
+ if(file.type!=="application/pdf"&&!file.name.toLowerCase().endsWith(".pdf")){$("completion-message").textContent="يرجى اختيار ملف PDF فقط.";return;}
+ if(file.size>10*1024*1024){$("completion-message").textContent="حجم الملف يتجاوز 10 ميجابايت.";return;}
+ $("completion-message").textContent="جارٍ رفع السيرة الذاتية وحفظ بياناتك...";
+ const safeName=file.name.replace(/[^\\w.\\-]+/g,"_");
+ const path=currentUser.id+"/"+Date.now()+"-"+safeName;
+ const {error:uploadError}=await db.storage.from("academic-cvs").upload(path,file,{contentType:"application/pdf",upsert:false});
+ if(uploadError){$("completion-message").textContent="تعذر رفع السيرة الذاتية: "+uploadError.message+" — تأكدي من تنفيذ تحديث قاعدة البيانات.";return;}
+ const updates={affiliation:val("completion-affiliation"),academic_title:val("completion-title"),orcid_url:val("completion-orcid")||null,scholar_url:val("completion-scholar")||null,bio:val("completion-bio")||null,cv_path:path};
+ const {data,error}=await db.from("profiles").update(updates).eq("id",currentUser.id).select("id,full_name,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio,cv_path,membership_status,account_role,created_at").single();
+ if(error){$("completion-message").textContent="تم رفع الملف لكن تعذر حفظ بيانات الملف الأكاديمي: "+error.message;return;}
+ currentProfile=data;showMember();await refreshAll();
 });
 async function loadSession(session){
  currentUser=session?.user||null;
  if(!currentUser){currentProfile=null;$("member-bar").hidden=true;$("admin-panel").hidden=true;showOnly("auth-screen");return;}
- const {data,error}=await db.from("profiles").select("id,full_name,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio,membership_status,account_role,created_at").eq("id",currentUser.id).single();
+ const {data,error}=await db.from("profiles").select("id,full_name,researcher_type,specialty,affiliation,academic_title,orcid_url,scholar_url,bio,cv_path,membership_status,account_role,created_at").eq("id",currentUser.id).single();
  if(error){showOnly("auth-screen");message("تعذر تحميل ملف العضوية. تأكدي من تنفيذ ملف إعداد قاعدة البيانات في Supabase.");return;}
  currentProfile=data;
- if(data.membership_status!=="approved"){showOnly("pending-screen");if(data.membership_status==="rejected"){$("pending-screen").querySelector("h2").textContent="تعذر اعتماد طلب العضوية";$("pending-screen").querySelector("p").textContent="لم تتم الموافقة على طلب العضوية. يمكنك التواصل مع إدارة المجتمع للاستفسار.";}return;}
+ if(!data.cv_path){
+  $("completion-affiliation").value=data.affiliation||"";
+  $("completion-title").value=data.academic_title||"";
+  $("completion-orcid").value=data.orcid_url||"";
+  $("completion-scholar").value=data.scholar_url||"";
+  $("completion-bio").value=data.bio||"";
+  showOnly("profile-completion");return;
+ }
  showMember();await refreshAll();
 }
 db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>loadSession(session),0)});
