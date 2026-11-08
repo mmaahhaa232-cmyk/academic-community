@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مجتمعي الأكاديمي</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f5f6f8;color:#263448}
+header{background:#142b46;color:white;padding:22px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.logo{font-size:23px;font-weight:bold;color:#e3c27c}
+header small{display:block;color:#d5dce5;margin-top:7px}
+nav{background:white;padding:12px 5%;display:flex;gap:9px;flex-wrap:wrap;box-shadow:0 2px 9px #0000000b}
+nav button{border:0;background:#f0f2f5;padding:11px 15px;border-radius:8px;cursor:pointer;color:#263448;font-weight:bold}
+nav button.active,nav button:hover{background:#173654;color:white}
+main{max-width:1100px;margin:28px auto;padding:0 16px}
+.hero{background:linear-gradient(120deg,#142b46,#315574);color:white;padding:38px 28px;border-radius:17px;margin-bottom:25px}
+.hero h1{font-size:30px;margin:0 0 14px}
+.hero p{line-height:2;color:#e1e8ef;max-width:650px}
+.hero button,.primary{background:#d6b66f;color:#142b46;border:0;padding:12px 20px;border-radius:8px;font-weight:bold;cursor:pointer}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:14px;margin:20px 0}
+.stat,.card{background:white;border-radius:12px;padding:19px;box-shadow:0 3px 14px #00000009}
+.stat strong{font-size:25px;color:#b18d4b;display:block;margin-bottom:8px}
+.section{display:none}
+.section.active{display:block}
+h2{color:#173654;margin:15px 0 20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.card h3{color:#173654;margin-top:0}
+.card p{line-height:1.8;color:#667386}
+.tag{display:inline-block;background:#f4eddf;color:#80642e;padding:5px 10px;border-radius:20px;font-size:12px}
+input,textarea,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #dce1e8;border-radius:8px;font:inherit}
+textarea{min-height:90px}
+label{font-weight:bold;font-size:14px}
+form{background:white;padding:20px;border-radius:12px;margin:15px 0}
+.item{background:white;border-radius:10px;padding:17px;margin:12px 0;border-right:4px solid #d6b66f}
+.item h3{margin:0 0 8px;color:#173654}
+.search{max-width:500px}
+footer{text-align:center;padding:25px;background:#142b46;color:#dce3eb;margin-top:45px;line-height:2}
+.muted{color:#748094;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <div class="logo">✦ مجتمعي الأكاديمي</div>
+  <small>مساحة تجمع العقول وتصنع فرص التعاون العلمي</small>
+ </div>
+ <span>المجتمع الأكاديمي الرقمي</span>
+</header>
+
+<nav>
+ <button class="active" onclick="show('home',this)">الرئيسية</button>
+ <button onclick="show('researchers',this)">الباحثون</button>
+ <button onclick="show('teams',this)">الفرق البحثية</button>
+ <button onclick="show('library',this)">المكتبة العلمية</button>
+ <button onclick="show('events',this)">الفعاليات</button>
+ <button onclick="show('ideas',this)">الأفكار البحثية</button>
+</nav>
+
+<main>
+<section id="home" class="section active">
+ <div class="hero">
+  <h1>مرحبًا بك في مجتمعي الأكاديمي</h1>
+  <p>منصة رقمية تجمع أعضاء هيئة التدريس والباحثين في بيئة علمية تفاعلية، وتفتح آفاقًا جديدة للتواصل وتبادل المعرفة وبناء الشراكات البحثية.</p>
+  <button onclick="show('researchers',document.querySelectorAll('nav button')[1])">اكتشف الباحثين ←</button>
+ </div>
+ <div class="stats">
+  <div class="stat"><strong id="researcherCount">0</strong>باحثون مسجلون</div>
+  <div class="stat"><strong id="teamCount">0</strong>فرق بحثية</div>
+  <div class="stat"><strong id="resourceCount">0</strong>مصادر علمية</div>
+  <div class="stat"><strong id="eventCount">0</strong>فعاليات</div>
+ </div>
+ <h2>خدمات المجتمع الأكاديمي</h2>
+ <div class="cards">
+  <div class="card"><h3>👩‍🏫 دليل الباحثين</h3><p>التعرف على التخصصات والخبرات والاهتمامات البحثية.</p></div>
+  <div class="card"><h3>🤝 الفرق البحثية</h3><p>إنشاء فرق علمية والانضمام إلى مجموعات بحثية.</p></div>
+  <div class="card"><h3>📚 المكتبة العلمية</h3><p>مشاركة المصادر والمراجع والروابط العلمية.</p></div>
+  <div class="card"><h3>📅 الفعاليات</h3><p>متابعة المؤتمرات والندوات وورش العمل.</p></div>
+  <div class="card"><h3>💡 الأفكار البحثية</h3><p>طرح المبادرات والأفكار وتبادل المقترحات العلمية.</p></div>
+  <div class="card"><h3>🔍 الشراكات البحثية</h3><p>الوصول إلى باحثين لديهم اهتمامات علمية مشتركة.</p></div>
+ </div>
+</section>
+
+<section id="researchers" class="section">
+ <h2>دليل أعضاء هيئة التدريس والباحثين</h2>
+ <p class="muted">تعرف على الخبرات والتخصصات الأكاديمية.</p>
+ <input class="search" id="researchSearch" placeholder="ابحث بالاسم أو التخصص..." oninput="render()">
+ <form onsubmit="addItem(event,'researchers')">
+  <h3>إضافة ملف باحث</h3>
+  <label>الاسم</label><input id="rname" required placeholder="الاسم الكامل">
+  <label>التخصص</label><input id="rspecialty" required placeholder="التخصص الأكاديمي">
+  <label>الجامعة أو الكلية</label><input id="runiversity" placeholder="اسم الجامعة أو الكلية">
+  <label>الاهتمامات البحثية</label><textarea id="rinterest" placeholder="اكتب الاهتمامات البحثية"></textarea>
+  <button class="primary">إضافة الباحث</button>
+ </form>
+ <div id="researchList"></div>
+</section>
+
+<section id="teams" class="section">
+ <h2>الفرق البحثية</h2>
+ <p class="muted">مساحة لتكوين فرق بحثية وتبادل الخبرات.</p>
+ <form onsubmit="addItem(event,'teams')">
+  <h3>إنشاء فريق بحثي</h3>
+  <label>اسم الفريق</label><input id="tname" required>
+  <label>المجال البحثي</label><input id="tfield" required>
+  <label>وصف الفريق وأهدافه</label><textarea id="tdesc"></textarea>
+  <button class="primary">إنشاء الفريق</button>
+ </form>
+ <div id="teamList"></div>
+</section>
+
+<section id="library" class="section">
+ <h2>المكتبة العلمية</h2>
+ <p class="muted">شارك المصادر والمراجع العلمية ليستفيد منها المجتمع الأكاديمي.</p>
+ <form onsubmit="addItem(event,'library')">
+  <h3>إضافة مصدر علمي</h3>
+  <label>عنوان المصدر</label><input id="lname" required>
+  <label>نوع المصدر</label>
+  <select id="ltype"><option>بحث علمي</option><option>كتاب</option><option>مرجع</option><option>رابط علمي</option></select>
+  <label>رابط المصدر (اختياري)</label><input id="llink" placeholder="https://">
+  <button class="primary">إضافة المصدر</button>
+ </form>
+ <div id="libraryList"></div>
+</section>
+
+<section id="events" class="section">
+ <h2>الفعاليات الأكاديمية</h2>
+ <p class="muted">تعرف على الأنشطة واللقاءات العلمية القادمة.</p>
+ <form onsubmit="addItem(event,'events')">
+  <h3>إضافة فعالية</h3>
+  <label>اسم الفعالية</label><input id="ename" required>
+  <label>نوع الفعالية</label>
+  <select id="etype"><option>مؤتمر</option><option>ندوة</option><option>ورشة عمل</option><option>لقاء علمي</option></select>
+  <label>التاريخ</label><input id="edate" type="date">
+  <label>التفاصيل</label><textarea id="edesc"></textarea>
+  <button class="primary">نشر الفعالية</button>
+ </form>
+ <div id="eventList"></div>
+</section>
+
+<section id="ideas" class="section">
+ <h2>الأفكار والمبادرات البحثية</h2>
+ <p class="muted">شارك فكرة بحثية وافتح المجال للتعاون مع المهتمين.</p>
+ <form onsubmit="addItem(event,'ideas')">
+  <h3>إضافة فكرة بحثية</h3>
+  <label>عنوان الفكرة</label><input id="iname" required>
+  <label>المجال</label><input id="ifield" required>
+  <label>تفاصيل الفكرة</label><textarea id="idesc"></textarea>
+  <button class="primary">نشر الفكرة</button>
+ </form>
+ <div id="ideaList"></div>
+</section>
+</main>
+
+<footer>
+ <strong>مجتمعي الأكاديمي</strong><br>
+ منصة رقمية لتعزيز التواصل والتعاون البحثي بين أعضاء هيئة التدريس<br>
+ <small>نحو مجتمع أكاديمي أكثر تواصلًا وإنتاجًا للمعرفة</small>
+</footer>
+
+<script>
+const keys={researchers:'researchers',teams:'teams',library:'library',events:'events',ideas:'ideas'};
+let data={};
+function load(){
+ Object.keys(keys).forEach(k=>{
+  try{data[k]=JSON.parse(localStorage.getItem('academic_'+k)||'[]')}
+  catch(e){data[k]=[]}
+ });
+ render();
+}
+function save(k){localStorage.setItem('academic_'+k,JSON.stringify(data[k]));}
+function show(id,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+ render();
+ window.scrollTo(0,0);
+}
+function val(id){return document.getElementById(id).value.trim();}
+function addItem(e,k){
+ e.preventDefault();
+ let item={};
+ if(k==='researchers')item={name:val('rname'),specialty:val('rspecialty'),university:val('runiversity'),interest:val('rinterest')};
+ if(k==='teams')item={name:val('tname'),field:val('tfield'),desc:val('tdesc')};
+ if(k==='library')item={name:val('lname'),type:val('ltype'),link:val('llink')};
+ if(k==='events')item={name:val('ename'),type:val('etype'),date:val('edate'),desc:val('edesc')};
+ if(k==='ideas')item={name:val('iname'),field:val('ifield'),desc:val('idesc')};
+ data[k].unshift(item);
+ save(k);
+ e.target.reset();
+ render();
+ alert('تمت الإضافة بنجاح!');
+}
+function card(item,k){
+ let title=item.name||'';
+ let details=[];
+ if(item.specialty)details.push('التخصص: '+item.specialty);
+ if(item.university)details.push('الجهة: '+item.university);
+ if(item.interest)details.push('الاهتمامات: '+item.interest);
+ if(item.field)details.push('المجال: '+item.field);
+ if(item.type)details.push('النوع: '+item.type);
+ if(item.date)details.push('التاريخ: '+item.date);
+ if(item.desc)details.push(item.desc);
+ if(item.link)details.push('الرابط: '+item.link);
+ return '<div class="item"><h3>'+escapeHTML(title)+'</h3><p>'+details.map(escapeHTML).join('<br>')+'</p><button onclick="removeItem(\\''+k+'\\','+data[k].indexOf(item)+')" style="border:0;background:#f5e9e8;color:#984b43;padding:7px 12px;border-radius:6px">حذف</button></div>';
+}
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function removeItem(k,i){
+ if(confirm('هل تريد حذف هذا العنصر؟')){
+ data[k].splice(i,1);save(k);render();
+ }
+}
+function render(){
+ let q=(document.getElementById('researchSearch')?.value||'').toLowerCase();
+ let filtered=data.researchers.filter(x=>(x.name+x.specialty+x.university+x.interest).toLowerCase().includes(q));
+ document.getElementById('researchList').innerHTML=filtered.map(x=>card(x,'researchers')).join('');
+ document.getElementById('teamList').innerHTML=data.teams.map(x=>card(x,'teams')).join('');
+ document.getElementById('libraryList').innerHTML=data.library.map(x=>card(x,'library')).join('');
+ document.getElementById('eventList').innerHTML=data.events.map(x=>card(x,'events')).join('');
+ document.getElementById('ideaList').innerHTML=data.ideas.map(x=>card(x,'ideas')).join('');
+ document.getElementById('researcherCount').textContent=data.researchers.length;
+ document.getElementById('teamCount').textContent=data.teams.length;
+ document.getElementById('resourceCount').textContent=data.library.length;
+ document.getElementById('eventCount').textContent=data.events.length;
+}
+load();
+</script>
+</body>
+</html>
